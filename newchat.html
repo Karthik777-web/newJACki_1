@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Messenger</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            align-items: center;
+            height: 100vh;
+        }
+        .messages {
+            width: 100%;
+            max-width: 500px;
+            height: 400px;
+            background-color: white;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            overflow-y: auto;
+            margin-bottom: 20px;
+            padding: 10px;
+        }
+        .message {
+            padding: 10px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+        }
+        .message.user {
+            background-color: #d1f7d1;
+            text-align: right;
+        }
+        .message.bot {
+            background-color: #f7d1d1;
+            text-align: left;
+        }
+        .input-container {
+            display: flex;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 500px;
+        }
+        input[type="text"] {
+            width: 80%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+        button {
+            width: 15%;
+            padding: 10px;
+            font-size: 16px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+<body>
+
+<div class="chat-container">
+    <div class="messages" id="message-container">
+        <!-- Messages will appear here -->
+    </div>
+    <div class="input-container">
+        <input type="text" id="message-input" placeholder="Type a message..." />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+</div>
+
+<script>
+    // Function to send a message
+    function sendMessage() {
+        const inputField = document.getElementById('message-input');
+        const messageContainer = document.getElementById('message-container');
+        const userMessage = inputField.value;
+
+        if (userMessage.trim()) {
+            // Display user's message
+            displayMessage(userMessage, 'user');
+            inputField.value = '';
+
+            // Simulate bot response (you can replace this with a real response from a server)
+            setTimeout(() => {
+                const botMessage = "Bot: I received your message!";
+                displayMessage(botMessage, 'bot');
+            }, 1000);
+        }
+    }
+
+    // Function to display a message
+    function displayMessage(message, sender) {
+        const messageContainer = document.getElementById('message-container');
+        const messageElement = document.createElement('div');
+        messageElement.classList.add('message', sender);
+        messageElement.innerText = message;
+        messageContainer.appendChild(messageElement);
+        messageContainer.scrollTop = messageContainer.scrollHeight;  // Auto-scroll to the bottom
+    }
+
+    // Allow "Enter" key to send message
+    document.getElementById('message-input').addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            sendMessage();
+        }
+    });
+</script>
+
+</body>
+</html>
